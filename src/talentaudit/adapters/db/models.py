@@ -1,4 +1,4 @@
-"""SQLAlchemy models for jobs and their requirements."""
+"""SQLAlchemy models for job policies and document metadata."""
 
 from __future__ import annotations
 
@@ -82,3 +82,24 @@ class RequirementModel(Base):
     weight: Mapped[float] = mapped_column(Float, nullable=False, default=1)
 
     job: Mapped[JobModel] = relationship(back_populates="requirements")
+
+
+class DocumentModel(Base):
+    """Persisted metadata for a validated document, never its raw bytes."""
+
+    __tablename__ = "documents"
+
+    id: Mapped[str] = mapped_column(
+        String(36),
+        primary_key=True,
+        default=lambda: str(uuid4()),
+    )
+    storage_key: Mapped[str] = mapped_column(String(500), nullable=False, unique=True)
+    sha256: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+    mime_type: Mapped[str] = mapped_column(String(100), nullable=False)
+    size_bytes: Mapped[int] = mapped_column(Integer, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(UTC),
+    )

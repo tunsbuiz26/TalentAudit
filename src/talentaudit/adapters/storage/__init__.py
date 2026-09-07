@@ -1,1 +1,1 @@
-"""Document storage adapters; intentionally empty in Milestone 0."""
+"""Document storage adapter implementations."""
