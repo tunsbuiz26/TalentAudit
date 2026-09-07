@@ -39,4 +39,3 @@ def get_settings() -> Settings:
     """Return the cached application settings."""
 
     return Settings()
-

@@ -15,4 +15,3 @@ def test_settings_use_safe_local_defaults() -> None:
 def test_settings_reject_non_postgresql_database_url() -> None:
     with pytest.raises(ValidationError):
         Settings(environment="test", database_url="sqlite:///local.db")
-

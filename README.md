@@ -28,17 +28,17 @@ Bộ tài liệu này là nguồn ngữ cảnh dùng chung cho bạn và Codex t
 
 ## Stack được đề xuất cho MVP
 
-| Thành phần | Lựa chọn |
-|---|---|
-| Ngôn ngữ | Python 3.12 |
-| API | FastAPI |
-| Orchestration | LangGraph |
-| Validation | Pydantic v2 |
-| Database | PostgreSQL + SQLAlchemy 2 + Alembic |
-| UI MVP | Streamlit |
-| Test | pytest |
-| Quality | Ruff + mypy |
-| Runtime | Docker Compose |
+| Thành phần  | Lựa chọn                                   |
+| ------------- | -------------------------------------------- |
+| Ngôn ngữ    | Python 3.12                                  |
+| API           | FastAPI                                      |
+| Orchestration | LangGraph                                    |
+| Validation    | Pydantic v2                                  |
+| Database      | PostgreSQL + SQLAlchemy 2 + Alembic          |
+| UI MVP        | Streamlit                                    |
+| Test          | pytest                                       |
+| Quality       | Ruff + mypy                                  |
+| Runtime       | Docker Compose                               |
 | Observability | Structured logging; LangSmith là tùy chọn |
 
 ## Milestone 0 — Bootstrap
@@ -74,23 +74,23 @@ Sau khi container healthy, API dùng tại `http://localhost:8000`.
 
 ## Các quyết định đã khóa — 02/09/2026
 
-| Hạng mục | Quyết định |
-|---|---|
-| Mục tiêu portfolio | LLM/LangGraph Agent |
+| Hạng mục               | Quyết định                                                    |
+| ------------------------ | ---------------------------------------------------------------- |
+| Mục tiêu portfolio     | LLM/LangGraph Agent                                              |
 | Định vị CV hiện tại | Software Engineering Graduate — Python Backend & Applied AI/LLM |
-| Deadline MVP | 20/09/2026 |
-| Thời gian thực hiện | 2–3 giờ/ngày, có thể tăng khi cần |
-| Người dùng MVP | Recruiter-only |
-| Job demo | AI/ML Engineer |
-| Ngôn ngữ | CV/JD tiếng Việt và tiếng Anh; UI ưu tiên tiếng Việt |
-| LLM provider | OpenAI qua abstraction `LLMClient` |
-| UI | Streamlit |
-| Deployment | Docker Compose local |
-| Email | Fake outbox |
-| Data | Synthetic only trong MVP |
-| Gold labels | Tự gắn nhãn theo rubric |
-| Primary metric | Skill Extraction F1 trên held-out bilingual dataset |
-| Debate | Sau MVP; chỉ giữ nếu evaluation chứng minh có ích |
+| Deadline MVP             | 20/09/2026                                                       |
+| Thời gian thực hiện   | 2–3 giờ/ngày, có thể tăng khi cần                         |
+| Người dùng MVP        | Recruiter-only                                                   |
+| Job demo                 | AI/ML Engineer                                                   |
+| Ngôn ngữ               | CV/JD tiếng Việt và tiếng Anh; UI ưu tiên tiếng Việt     |
+| LLM provider             | OpenAI qua abstraction`LLMClient`                              |
+| UI                       | Streamlit                                                        |
+| Deployment               | Docker Compose local                                             |
+| Email                    | Fake outbox                                                      |
+| Data                     | Synthetic only trong MVP                                         |
+| Gold labels              | Tự gắn nhãn theo rubric                                       |
+| Primary metric           | Skill Extraction F1 trên held-out bilingual dataset             |
+| Debate                   | Sau MVP; chỉ giữ nếu evaluation chứng minh có ích          |
 
 Thiết kế theo **modular monolith**, chưa dùng microservices. Đây là lựa chọn có chủ đích để giảm độ phức tạp triển khai trong khi vẫn tách module rõ ràng.
 

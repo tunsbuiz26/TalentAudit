@@ -52,4 +52,3 @@ def test_ready_endpoint_fails_closed_when_database_is_down() -> None:
 
     assert response.status_code == 503
     assert response.json() == {"status": "not_ready", "database": "down"}
-

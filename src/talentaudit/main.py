@@ -7,6 +7,7 @@ from talentaudit.adapters.db.health import (
     SqlAlchemyDatabaseHealthChecker,
 )
 from talentaudit.api.health import create_health_router
+from talentaudit.api.v1.router import router as api_v1_router
 from talentaudit.config import Settings, get_settings
 
 
@@ -28,8 +29,8 @@ def create_app(
     application.include_router(
         create_health_router(resolved_settings, resolved_checker),
     )
+    application.include_router(api_v1_router, prefix="/api/v1")
     return application
 
 
 app = create_app()
-

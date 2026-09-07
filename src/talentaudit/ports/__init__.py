@@ -1,2 +1,1 @@
 """Interfaces for infrastructure dependencies."""
-

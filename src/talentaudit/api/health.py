@@ -46,4 +46,3 @@ def create_health_router(
         return ReadinessResponse(status="ready", database="up")
 
     return router
-
