@@ -1,0 +1,4 @@
+Synthetic profile: Machine learning engineer
+Skills: Python, SQL
+Experience: two years building classification models.
+Projects: trained models on generated datasets and tested predictions.

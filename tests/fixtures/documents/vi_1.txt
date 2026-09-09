@@ -1,0 +1,4 @@
+Hồ sơ tổng hợp: Kỹ sư học máy
+Kỹ năng: Python, SQL
+Kinh nghiệm: hai năm xây dựng mô hình phân loại dữ liệu.
+Dự án: kiểm thử mô hình dự báo với dữ liệu giả lập.

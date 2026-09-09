@@ -1,0 +1,4 @@
+Hồ sơ tổng hợp: Nghiên cứu xử lý văn bản
+Kỹ năng: Python, PyTorch
+Dự án: xây dựng mô hình phân loại văn bản tiếng Việt.
+Học vấn: chương trình học máy giả lập; chưa có kinh nghiệm triển khai.

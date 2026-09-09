@@ -6,6 +6,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 DocumentMimeType = Literal["application/pdf", "text/plain"]
+DocumentLanguage = Literal["vi", "en", "mixed"]
 
 
 class DocumentUpload(BaseModel):
@@ -28,6 +29,17 @@ class ValidatedDocument(BaseModel):
     size_bytes: int = Field(gt=0)
     sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
     content: bytes = Field(min_length=1, repr=False, exclude=True)
+
+
+class ParsedDocument(BaseModel):
+    """Text extracted from a validated document with stable provenance."""
+
+    document_id: str = Field(min_length=1, max_length=100)
+    sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    text: str = Field(min_length=1, repr=False)
+    # Parser enriches successful results before returning them to callers.
+    document_language: DocumentLanguage
+    page_count: int | None = Field(default=None, ge=1)
 
 
 class DocumentMetadata(BaseModel):

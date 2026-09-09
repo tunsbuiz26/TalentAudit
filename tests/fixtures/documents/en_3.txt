@@ -1,0 +1,4 @@
+Synthetic profile: Model deployment engineer
+Skills: Docker, Kubernetes
+Experience: one year deploying models with monitoring.
+Projects: automated testing for model services.

@@ -1,0 +1,4 @@
+Synthetic profile: Text research engineer
+Skills: Python, PyTorch
+Education: simulated machine learning coursework.
+Projects: trained text classifiers; no deployment experience.

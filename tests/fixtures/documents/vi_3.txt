@@ -1,0 +1,4 @@
+Hồ sơ tổng hợp: Kỹ sư triển khai mô hình
+Kỹ năng: Docker, Kubernetes
+Kinh nghiệm: một năm triển khai mô hình và giám sát.
+Dự án: tự động hóa kiểm thử dịch vụ.

@@ -1,0 +1,4 @@
+Synthetic profile: Software tester
+Skills: pytest, SQL
+Experience: project duration unspecified.
+Projects: built regression tests for data services.

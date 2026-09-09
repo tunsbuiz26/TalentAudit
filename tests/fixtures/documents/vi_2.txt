@@ -1,0 +1,4 @@
+Hồ sơ tổng hợp: Kỹ sư dữ liệu
+Kỹ năng: SQL, Spark
+Kinh nghiệm: ba năm phát triển hệ thống xử lý dữ liệu.
+Dự án: xây dựng luồng dữ liệu và kiểm tra chất lượng.

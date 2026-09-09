@@ -1,0 +1,4 @@
+Hồ sơ tổng hợp: Kiểm thử phần mềm
+Kỹ năng: pytest, SQL
+Kinh nghiệm: kiểm thử hệ thống dữ liệu trong dự án học tập.
+Dự án: xây dựng bộ kiểm thử; thời gian chưa xác định.

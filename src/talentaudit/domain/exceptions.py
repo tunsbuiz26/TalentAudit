@@ -41,3 +41,49 @@ class DocumentValidationError(ValueError):
         self.code = code
         self.public_message = _DOCUMENT_VALIDATION_MESSAGES[code]
         super().__init__(self.public_message)
+
+
+class DocumentParseErrorCode(StrEnum):
+    """Stable error codes emitted while parsing validated document bytes."""
+
+    UNSUPPORTED_DOCUMENT_TYPE = "UNSUPPORTED_DOCUMENT_TYPE"
+    INVALID_TEXT_ENCODING = "INVALID_TEXT_ENCODING"
+    EMPTY_TEXT = "EMPTY_TEXT"
+    TEXT_LIMIT_EXCEEDED = "TEXT_LIMIT_EXCEEDED"
+    MALFORMED_PDF = "MALFORMED_PDF"
+    PASSWORD_PROTECTED_PDF = "PASSWORD_PROTECTED_PDF"
+    PAGE_LIMIT_EXCEEDED = "PAGE_LIMIT_EXCEEDED"
+    HASH_MISMATCH = "HASH_MISMATCH"
+    PARSER_ERROR = "PARSER_ERROR"
+
+
+_DOCUMENT_PARSE_MESSAGES: dict[DocumentParseErrorCode, str] = {
+    DocumentParseErrorCode.UNSUPPORTED_DOCUMENT_TYPE: (
+        "The document type is not supported by this parser."
+    ),
+    DocumentParseErrorCode.INVALID_TEXT_ENCODING: (
+        "The document text is not valid UTF-8."
+    ),
+    DocumentParseErrorCode.EMPTY_TEXT: "The document does not contain text.",
+    DocumentParseErrorCode.TEXT_LIMIT_EXCEEDED: (
+        "The extracted document text exceeds the configured limit."
+    ),
+    DocumentParseErrorCode.MALFORMED_PDF: "The PDF document could not be parsed.",
+    DocumentParseErrorCode.PASSWORD_PROTECTED_PDF: (
+        "The PDF document is password protected."
+    ),
+    DocumentParseErrorCode.PAGE_LIMIT_EXCEEDED: (
+        "The PDF document exceeds the configured page limit."
+    ),
+    DocumentParseErrorCode.HASH_MISMATCH: "The document integrity check failed.",
+    DocumentParseErrorCode.PARSER_ERROR: "The document parser failed.",
+}
+
+
+class DocumentParseError(ValueError):
+    """Raised when validated document bytes cannot produce usable text."""
+
+    def __init__(self, code: DocumentParseErrorCode) -> None:
+        self.code = code
+        self.public_message = _DOCUMENT_PARSE_MESSAGES[code]
+        super().__init__(self.public_message)

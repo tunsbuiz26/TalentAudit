@@ -1,0 +1,4 @@
+Synthetic profile: Data engineer
+Skills: SQL, Spark
+Experience: three years developing data pipelines.
+Projects: built batch processing and data quality tests.
