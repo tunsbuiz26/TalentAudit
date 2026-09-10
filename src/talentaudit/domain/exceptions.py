@@ -55,6 +55,7 @@ class DocumentParseErrorCode(StrEnum):
     PAGE_LIMIT_EXCEEDED = "PAGE_LIMIT_EXCEEDED"
     HASH_MISMATCH = "HASH_MISMATCH"
     PARSER_ERROR = "PARSER_ERROR"
+    PARSE_TIMEOUT = "PARSE_TIMEOUT"
 
 
 _DOCUMENT_PARSE_MESSAGES: dict[DocumentParseErrorCode, str] = {
@@ -77,6 +78,7 @@ _DOCUMENT_PARSE_MESSAGES: dict[DocumentParseErrorCode, str] = {
     ),
     DocumentParseErrorCode.HASH_MISMATCH: "The document integrity check failed.",
     DocumentParseErrorCode.PARSER_ERROR: "The document parser failed.",
+    DocumentParseErrorCode.PARSE_TIMEOUT: "The document parser timed out.",
 }
 
 

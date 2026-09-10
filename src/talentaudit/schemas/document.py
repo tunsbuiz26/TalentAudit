@@ -3,7 +3,9 @@
 from pathlib import PurePosixPath
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
+
+from talentaudit.domain.exceptions import DocumentParseErrorCode
 
 DocumentMimeType = Literal["application/pdf", "text/plain"]
 DocumentLanguage = Literal["vi", "en", "mixed"]
@@ -42,7 +44,36 @@ class ParsedDocument(BaseModel):
     page_count: int | None = Field(default=None, ge=1)
 
 
-class DocumentMetadata(BaseModel):
+class ParseState(BaseModel):
+    """Only a completed parse has language/pages; failed parses carry a safe code."""
+
+    parser_status: Literal["PENDING", "PARSED", "FAILED"] = "PENDING"
+    document_language: DocumentLanguage | None = None
+    page_count: int | None = Field(default=None, ge=1)
+    parse_error_code: DocumentParseErrorCode | None = None
+
+    @model_validator(mode="after")
+    def validate_state(self) -> "ParseState":
+        if self.parser_status == "PARSED":
+            if self.document_language is None or self.parse_error_code is not None:
+                raise ValueError("parsed metadata requires language and no error")
+        else:
+            if self.document_language is not None or self.page_count is not None:
+                raise ValueError("unparsed document cannot have language or pages")
+            if (self.parser_status == "FAILED") != (self.parse_error_code is not None):
+                raise ValueError("only failed parse requires an error code")
+        return self
+
+
+class DocumentParseMetadata(ParseState):
+    """Hash-bound update that cannot transport raw document text or bytes."""
+
+    model_config = ConfigDict(extra="forbid")
+    document_id: str = Field(min_length=1, max_length=100)
+    sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+
+
+class DocumentMetadata(ParseState):
     """Persistable document metadata; it deliberately contains no raw bytes."""
 
     model_config = ConfigDict(from_attributes=True)

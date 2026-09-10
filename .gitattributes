@@ -1,0 +1,2 @@
+# Pin fixture bytes so SHA-256 and source offsets agree on Windows and Linux.
+tests/fixtures/documents/*.txt text eol=lf

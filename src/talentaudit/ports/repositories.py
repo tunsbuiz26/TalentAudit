@@ -2,7 +2,7 @@
 
 from typing import Protocol
 
-from talentaudit.schemas.document import DocumentMetadata
+from talentaudit.schemas.document import DocumentMetadata, DocumentParseMetadata
 from talentaudit.schemas.job import JobCreate, JobResponse
 
 
@@ -30,5 +30,10 @@ class DocumentRepository(Protocol):
 
     def get(self, document_id: str) -> DocumentMetadata | None:
         """Return document metadata by identifier, if it exists."""
+
+        ...
+
+    def update_parse_metadata(self, metadata: DocumentParseMetadata) -> None:
+        """Persist parser result only when the stored hash matches."""
 
         ...

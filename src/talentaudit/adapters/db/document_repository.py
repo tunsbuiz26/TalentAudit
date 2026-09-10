@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from talentaudit.adapters.db.models import DocumentModel
 from talentaudit.ports.repositories import DocumentRepository
-from talentaudit.schemas.document import DocumentMetadata
+from talentaudit.schemas.document import DocumentMetadata, DocumentParseMetadata
 
 
 class SqlAlchemyDocumentRepository(DocumentRepository):
@@ -17,6 +17,8 @@ class SqlAlchemyDocumentRepository(DocumentRepository):
     def create(self, metadata: DocumentMetadata) -> DocumentMetadata:
         """Insert metadata for a document already saved by a storage adapter."""
 
+        if metadata.parser_status != "PENDING":
+            raise ValueError("new document must have pending parse metadata")
         document = DocumentModel(
             id=metadata.document_id,
             storage_key=metadata.storage_key,
@@ -41,6 +43,29 @@ class SqlAlchemyDocumentRepository(DocumentRepository):
             return None
         return self._to_metadata(document)
 
+    def update_parse_metadata(self, metadata: DocumentParseMetadata) -> None:
+        """Update safe metadata atomically; reject unknown IDs or stale provenance."""
+
+        metadata = DocumentParseMetadata.model_validate(metadata.model_dump())
+        document = self._session.get(DocumentModel, metadata.document_id)
+        if document is None:
+            raise LookupError("document not found")
+        if document.sha256 != metadata.sha256:
+            raise ValueError("document hash mismatch")
+        if metadata.parser_status == "PARSED":
+            is_pdf = document.mime_type == "application/pdf"
+            if is_pdf != (metadata.page_count is not None):
+                raise ValueError("page count does not match document MIME")
+        document.parser_status = metadata.parser_status
+        document.document_language = metadata.document_language
+        document.page_count = metadata.page_count
+        document.parse_error_code = metadata.parse_error_code
+        try:
+            self._session.commit()
+        except SQLAlchemyError:
+            self._session.rollback()
+            raise
+
     @staticmethod
     def _to_metadata(document: DocumentModel) -> DocumentMetadata:
         """Map an ORM record to the metadata-only application contract."""
@@ -52,5 +77,9 @@ class SqlAlchemyDocumentRepository(DocumentRepository):
                 "mime_type": document.mime_type,
                 "size_bytes": document.size_bytes,
                 "sha256": document.sha256,
+                "parser_status": document.parser_status,
+                "document_language": document.document_language,
+                "page_count": document.page_count,
+                "parse_error_code": document.parse_error_code,
             }
         )

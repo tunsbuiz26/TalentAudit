@@ -1,11 +1,8 @@
 """Deterministic parsing for validated TXT and text-based PDF bytes."""
 
 from hashlib import sha256
-from io import BytesIO
 
-from pypdf import PdfReader
-from pypdf.errors import PdfReadError
-
+from talentaudit.adapters.parsing.pdf_process import extract_pdf_in_worker, pdf_request
 from talentaudit.config import Settings
 from talentaudit.domain.exceptions import DocumentParseError, DocumentParseErrorCode
 from talentaudit.schemas.document import ParsedDocument, ValidatedDocument
@@ -60,37 +57,16 @@ class DocumentParser:
         return text, None
 
     def _parse_pdf(self, content: bytes) -> tuple[str, int]:
-        """Extract text from a PDF without rendering or executing embedded data."""
+        """Give potentially expensive PDF decoding a disposable process."""
 
-        try:
-            reader = PdfReader(BytesIO(content), strict=True)
-            if reader.is_encrypted:
-                raise DocumentParseError(DocumentParseErrorCode.PASSWORD_PROTECTED_PDF)
-            page_count = len(reader.pages)
-            if page_count > self._settings.max_pdf_pages:
-                raise DocumentParseError(DocumentParseErrorCode.PAGE_LIMIT_EXCEEDED)
-
-            page_texts: list[str] = []
-            extracted_char_count = 0
-            for page in reader.pages:
-                page_text = page.extract_text() or ""
-                page_texts.append(page_text)
-                extracted_char_count += len(page_text)
-                if len(page_texts) > 1:
-                    extracted_char_count += 1
-                if extracted_char_count > self._settings.max_extracted_text_chars:
-                    raise DocumentParseError(DocumentParseErrorCode.TEXT_LIMIT_EXCEEDED)
-            text = "\n".join(page_texts)
-        except DocumentParseError:
-            raise
-        except PdfReadError:
-            raise DocumentParseError(DocumentParseErrorCode.MALFORMED_PDF) from None
-        except Exception:
-            raise DocumentParseError(DocumentParseErrorCode.PARSER_ERROR) from None
-
-        if not text.strip():
-            raise DocumentParseError(DocumentParseErrorCode.EMPTY_TEXT)
-        return text, page_count
+        request = pdf_request(
+            content,
+            self._settings.max_pdf_pages,
+            self._settings.max_extracted_text_chars,
+        )
+        return extract_pdf_in_worker(
+            request, self._settings.document_parse_timeout_seconds
+        )
 
     @staticmethod
     def _verify_hash(document: ValidatedDocument) -> None:

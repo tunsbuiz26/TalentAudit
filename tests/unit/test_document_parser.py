@@ -11,7 +11,9 @@ from reportlab.pdfgen.canvas import Canvas
 from talentaudit.config import Settings
 from talentaudit.domain.exceptions import DocumentParseError, DocumentParseErrorCode
 from talentaudit.schemas.document import ParsedDocument, ValidatedDocument
+from talentaudit.schemas.pdf_worker import PDFParseLimits
 from talentaudit.services.document_parser import DocumentParser
+from talentaudit.services.pdf_text import PDFTextParser
 
 
 def make_text_document(content: bytes) -> ValidatedDocument:
@@ -161,9 +163,11 @@ def test_unexpected_parser_error_is_typed(monkeypatch: pytest.MonkeyPatch) -> No
     def fail(*args: object, **kwargs: object) -> None:
         raise RuntimeError("synthetic internal details")
 
-    monkeypatch.setattr("talentaudit.services.document_parser.PdfReader", fail)
+    monkeypatch.setattr("talentaudit.services.pdf_text.PdfReader", fail)
     with pytest.raises(DocumentParseError) as error:
-        DocumentParser(Settings(environment="test")).parse(make_pdf_document(["Text"]))
+        PDFTextParser(PDFParseLimits(max_pages=25, max_characters=1000)).parse(
+            make_pdf_document(["Text"]).content
+        )
     assert error.value.code is DocumentParseErrorCode.PARSER_ERROR
     assert "internal details" not in str(error.value)
     assert error.value.__suppress_context__

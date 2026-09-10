@@ -16,6 +16,9 @@ class CandidateProfile(BaseModel):
     skills: list[str] = Field(default_factory=list, max_length=500)
     experience_years: dict[str, float] = Field(default_factory=dict)
     evidence_refs: list[EvidenceRef] = Field(default_factory=list, max_length=1_000)
+    # Extractor fills these only after validating each claim's source spans.
+    skill_evidence: dict[str, list[EvidenceRef]] = Field(default_factory=dict)
+    experience_evidence: dict[str, list[EvidenceRef]] = Field(default_factory=dict)
 
     @model_validator(mode="after")
     def normalize_and_validate(self) -> "CandidateProfile":

@@ -110,6 +110,12 @@ Workflow quan trọng cần integration test không gọi API LLM thật; dùng 
 7. Cập nhật tài liệu nếu contract, state, API hoặc quyết định kiến trúc thay đổi.
 8. Báo cáo file đã đổi, test đã chạy, giới hạn còn lại và task tiếp theo.
 
+Quy ước tài liệu theo ngày (yêu cầu của người dùng): trước khi triển khai, tạo
+`docs/learning/Mx_DAYxx_ANALYSIS.md` giải thích phạm vi, yêu cầu, mục đích và vai trò
+từng thành phần. Sau khi triển khai, tạo `docs/reports/Mx_DAYxx_IMPLEMENTATION_REPORT.md`
+ghi file đã đổi, kết quả kiểm tra thực tế, phần còn thiếu và liên kết phân tích ngày
+kế tiếp. Không đánh dấu hoàn thành cho các tiêu chí chưa kiểm chứng.
+
 Không tự mở rộng sang phase sau khi phase hiện tại chưa đạt acceptance criteria.
 
 Với deadline 20/09/2026, ưu tiên theo thứ tự: core pipeline, reducer/parallel review, HITL, evaluation nhỏ, documentation/demo. Không hy sinh test của deterministic policy và approval gate để thêm Candidate Support hoặc Debate.

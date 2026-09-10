@@ -1,0 +1,116 @@
+{
+  "version": "m2-development-v1",
+  "purpose": "synthetic offline regression; not held-out or measured model quality",
+  "fixtures": [
+    {
+      "path": "en_1.txt",
+      "sha256": "1cdac0d93edc9c5a0413ab8096f8dd20b6d05b81c208292913f228d811585c36",
+      "language": "en",
+      "skills": [
+        "Python",
+        "SQL"
+      ],
+      "years": null,
+      "expected_status": "SUCCESS"
+    },
+    {
+      "path": "en_2.txt",
+      "sha256": "85f71f04f140765286523468b891cf57bcf305bb0dab3adf34702b03b2c7c1c3",
+      "language": "en",
+      "skills": [
+        "SQL",
+        "Spark"
+      ],
+      "years": null,
+      "expected_status": "SUCCESS"
+    },
+    {
+      "path": "en_3.txt",
+      "sha256": "8f01cc01bf0cb04f7942f0e75d8703c28f96dc6ce8ed21295f3b380ff83e5d59",
+      "language": "en",
+      "skills": [
+        "Docker",
+        "Kubernetes"
+      ],
+      "years": null,
+      "expected_status": "SUCCESS"
+    },
+    {
+      "path": "en_4.txt",
+      "sha256": "6d5812250c6373aa14b581fcb2ed07b9d405ec8e03bef360e8cfc27289181883",
+      "language": "en",
+      "skills": [
+        "Python",
+        "PyTorch"
+      ],
+      "years": null,
+      "expected_status": "SUCCESS"
+    },
+    {
+      "path": "en_5.txt",
+      "sha256": "604ee8f50091e518b89f5ab5eecc50a916ada7b6e47e58131fe348dfcbe8e389",
+      "language": "en",
+      "skills": [
+        "pytest",
+        "SQL"
+      ],
+      "years": null,
+      "expected_status": "SUCCESS"
+    },
+    {
+      "path": "vi_1.txt",
+      "sha256": "3c81227b3e14d393ad09752b6116c6a3fc3b8481648f26c34f6acbd769b5627a",
+      "language": "vi",
+      "skills": [
+        "Python",
+        "SQL"
+      ],
+      "years": null,
+      "expected_status": "SUCCESS"
+    },
+    {
+      "path": "vi_2.txt",
+      "sha256": "8db84f02fc54aa3042f04295db05a6bd5e30f6332e81669fe92798cb02589979",
+      "language": "vi",
+      "skills": [
+        "SQL",
+        "Spark"
+      ],
+      "years": null,
+      "expected_status": "SUCCESS"
+    },
+    {
+      "path": "vi_3.txt",
+      "sha256": "a9f7b1e8948269f88629e65293f30b01e5fd4db12438bdac083dea51fea826a5",
+      "language": "vi",
+      "skills": [
+        "Docker",
+        "Kubernetes"
+      ],
+      "years": null,
+      "expected_status": "SUCCESS"
+    },
+    {
+      "path": "vi_4.txt",
+      "sha256": "4aaae2fba38c36f30e9200749c80e91859f97ac7f861ec39ccaee9cb9bedb5b7",
+      "language": "vi",
+      "skills": [
+        "Python",
+        "PyTorch"
+      ],
+      "years": null,
+      "expected_status": "SUCCESS"
+    },
+    {
+      "path": "vi_5.txt",
+      "sha256": "d936a0a46f9ef5793cb7dbd16550b015b0e7255426512cded49e3311d7ad4c30",
+      "language": "vi",
+      "skills": [
+        "pytest",
+        "SQL"
+      ],
+      "years": null,
+      "expected_status": "SUCCESS"
+    }
+  ]
+}

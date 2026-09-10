@@ -4,7 +4,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Literal
 
-from pydantic import Field, field_validator
+from pydantic import Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -34,7 +34,15 @@ class Settings(BaseSettings):
     )
     max_upload_bytes: int = Field(default=5 * 1024 * 1024, ge=1)
     max_pdf_pages: int = Field(default=25, ge=1, le=1_000)
+    document_parse_timeout_seconds: float = Field(default=15, gt=0, le=300)
     max_extracted_text_chars: int = Field(default=1_000_000, ge=1)
+
+    # Optional until the real adapter is explicitly selected. Fake needs no key.
+    openai_api_key: SecretStr | None = Field(default=None, repr=False, exclude=True)
+    openai_model: str = ""
+    openai_temperature: float = Field(default=0.0, ge=0, le=2)
+    openai_max_output_tokens: int = Field(default=4096, ge=1)
+    openai_timeout_seconds: float = Field(default=30, gt=0, le=300)
 
     @field_validator("database_url")
     @classmethod

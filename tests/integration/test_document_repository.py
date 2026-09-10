@@ -45,6 +45,10 @@ def test_document_repository_persists_metadata_without_raw_bytes() -> None:
         "mime_type",
         "size_bytes",
         "created_at",
+        "parser_status",
+        "document_language",
+        "page_count",
+        "parse_error_code",
     }
 
 

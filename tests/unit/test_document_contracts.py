@@ -40,6 +40,10 @@ def test_document_contracts_keep_raw_bytes_out_of_serialized_results() -> None:
     assert upload.content == b"%PDF-synthetic"
     assert "content" not in validated.model_dump()
     assert metadata.model_dump() == {
+        "parser_status": "PENDING",
+        "document_language": None,
+        "page_count": None,
+        "parse_error_code": None,
         "document_id": "document-001",
         "storage_key": "documents/document-001.pdf",
         "mime_type": "application/pdf",

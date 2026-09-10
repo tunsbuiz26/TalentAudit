@@ -72,6 +72,50 @@ docker compose up --build
 
 Sau khi container healthy, API dùng tại `http://localhost:8000`.
 
+## Milestone 2 — Day 08: extraction boundary
+
+Đã có `LLMClient`, adapter OpenAI/fake, prompt v1 và `ProfileExtractor` kiểm chứng
+evidence trước khi trả `CandidateProfile`. Đây là service độc lập; chưa nối vào
+API hoặc LangGraph. Kết quả `NEEDS_REVIEW` không chứa profile để đưa vào matcher.
+
+Tài liệu học và bàn giao:
+
+- [Phân tích Day 08](docs/learning/M2_DAY08_ANALYSIS.md).
+- [Báo cáo Day 08 và vai trò từng file](docs/reports/M2_DAY08_IMPLEMENTATION_REPORT.md).
+- [Phân tích Day 09 và việc còn thiếu](docs/learning/M2_DAY09_ANALYSIS.md).
+
+Các lệnh đã kiểm chứng từ thư mục gốc trên Windows, với `.venv` Python 3.12:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -e ".[dev]"
+.\.venv\Scripts\python.exe -m pytest tests/unit/test_profile_extractor.py
+.\.venv\Scripts\python.exe -m pytest tests/unit/test_openai_adapter.py
+.\.venv\Scripts\python.exe -m ruff check .
+.\.venv\Scripts\python.exe -m ruff format --check .
+.\.venv\Scripts\python.exe -m mypy src
+.\.venv\Scripts\python.exe -m pytest
+```
+
+Test dùng fake hoặc HTTP transport trong memory, chặn network và không cần API key.
+Adapter thật chỉ được dùng khi cấu hình các biến `TALENTAUDIT_OPENAI_*` trong
+environment/`.env` riêng; `.env.example` để trống key/model. Model phải hỗ trợ
+Responses structured outputs và tham số temperature. Chưa kiểm chứng API thật hoặc
+đo extraction F1; test fake không phải đánh giá chất lượng model.
+
+## Milestone 2 — Day 09: regression và parser metadata
+
+Đã có 10 fixture VI/EN qua extraction fake kèm manifest/hash, evidence regression,
+PDF subprocess timeout và parser metadata migration 0003. Suite hiện có **157 tests**.
+Các quality gate ở phần trên đã chạy lại và pass.
+
+- [Báo cáo Day 09 và vai trò từng file](docs/reports/M2_DAY09_IMPLEMENTATION_REPORT.md).
+- [Phân tích Day 10, có điều kiện nghiệm thu M2](docs/learning/M3_DAY10_ANALYSIS.md).
+
+Migration đã pass trên SQLite tạm và PostgreSQL 16 container tạm, gồm fresh upgrade,
+upgrade giữ dữ liệu và repository round-trip. Milestone 2 đã hoàn tất acceptance.
+PDF worker không phải OS sandbox/hard RAM cap; fake regression không phải kết quả
+chất lượng model thật.
+
 ## Các quyết định đã khóa — 02/09/2026
 
 | Hạng mục               | Quyết định                                                    |

@@ -9,6 +9,7 @@ from talentaudit.config import Settings
 from talentaudit.domain.exceptions import DocumentValidationError
 from talentaudit.schemas.document import (
     DocumentMetadata,
+    DocumentParseMetadata,
     DocumentUpload,
     ValidatedDocument,
 )
@@ -45,6 +46,9 @@ class RecordingRepository:
 
     def get(self, document_id: str) -> DocumentMetadata | None:
         return None
+
+    def update_parse_metadata(self, metadata: DocumentParseMetadata) -> None:
+        raise AssertionError("parse metadata is not part of ingestion")
 
 
 class FailingRepository(RecordingRepository):

@@ -98,6 +98,12 @@ class DocumentModel(Base):
     sha256: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
     mime_type: Mapped[str] = mapped_column(String(100), nullable=False)
     size_bytes: Mapped[int] = mapped_column(Integer, nullable=False)
+    parser_status: Mapped[str] = mapped_column(
+        String(20), nullable=False, default="PENDING", server_default="PENDING"
+    )
+    document_language: Mapped[str | None] = mapped_column(String(5), nullable=True)
+    page_count: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    parse_error_code: Mapped[str | None] = mapped_column(String(50), nullable=True)
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
